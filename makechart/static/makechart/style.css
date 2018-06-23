@@ -1,0 +1,49 @@
+body {
+	background-color: #0e223a;
+    font-family: "Lato", sans-serif;
+    color: #ffffff;
+    font-size: 1.3em;
+}
+
+.orgchart-node {
+	border: 2px solid #bc9c5c;
+	background-color: #0e223a;
+	color: #ffffff;
+
+}
+
+body .google-visualization-orgchart-node-medium, .orgchart-node {
+	font-size: 1.2em;
+}
+
+body .google-visualization-orgchart-linebottom  {
+	border-bottom: 1px solid #bc9c5c;
+}
+
+body .google-visualization-orgchart-lineleft {
+    border-left: 1px solid #bc9c5c;
+}
+
+body .google-visualization-orgchart-lineright {
+    border-right: 1px solid #bc9c5c;
+}
+
+body h1 {
+	text-align: center;
+
+}
+
+body h1.align-left {
+	text-align: left;
+
+}
+
+
+a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
+}

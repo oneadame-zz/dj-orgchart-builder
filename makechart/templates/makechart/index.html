@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+	<title>
+		List of Org Charts
+	</title>
+</head>
+<body>
+	<h1 class="align-left	">List of Teams</h1>
+{% if latest_teams_list %}
+    <ul>
+    {% for team in latest_teams_list %}
+        <li><a href="{% url 'makechart:detail' team.id %}">{{ team.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No teams are available.</p>
+{% endif %}
+</body>
+</html>
+  <head>
+

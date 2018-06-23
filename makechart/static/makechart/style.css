@@ -12,6 +12,10 @@ body {
 
 }
 
+.detail-dia {
+	display: none;
+}
+
 body .google-visualization-orgchart-node-medium, .orgchart-node {
 	font-size: 1.2em;
 }
@@ -46,4 +50,24 @@ a {
 
 li {
 	list-style-type: none;
+}
+
+.edit-emp-button[type='submit'] {
+	margin-top: 1em;
+	font-size: .8em;
+}
+
+td>span {
+	cursor:pointer;
+}
+
+
+/* title bar close button for jQuery UI dailog */
+div.ui-dialog-titlebar>button.ui-corner-all {
+	border: none;
+	background-color: #0e223a;
+}
+/* title bar close button for jQuery UI dailog */
+div.ui-dialog-titlebar>button.ui-corner-all>span {
+	background-image: url(images/ui-icons_bc9c5c_256x240.png);
 }

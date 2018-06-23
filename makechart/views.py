@@ -11,7 +11,6 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_teams_list'
 
     def get_queryset(self):
-        """Return the last five published questions."""
         return Team.objects.all()
 
 

@@ -1,0 +1,36 @@
+{% if employee_list %}
+
+    {% for employee in employee_list %}
+
+    <ul>
+
+    <li>
+        <h2>{{ employee.id }}</h2>
+        <h2>{{ employee.name }}</h2>
+        <h2>{{ employee.manager }} </h2>
+        <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">Delete</button>
+        </form>
+           <form action="{% url 'makechart:employee-update' employee.id  %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">Update</button>
+        </form>
+
+
+    </li>
+
+
+    </ul>
+
+{% endfor %}
+
+    {% else %}
+    <h1>No employees found on the database.</h1>
+
+
+{% endif %}
+     <form action="{% url 'makechart:employee-entry'  %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">Add Employee</button>
+    </form>

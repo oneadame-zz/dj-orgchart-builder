@@ -15,10 +15,10 @@
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
-{% if employee.name %}
-    <h3>{{ employee.name }}</strong></h3>
+{% if team.name %}
+    <h3>{{ team.name }}</strong></h3>
 {% else %}
-	 <h3>Add a New Employee</h3>
+	 <h3>Add a New team</h3>
 {% endif %}
 <form action="" method="post" enctype="multipart/form-data" class="detail-update-form">
     {% csrf_token %}
@@ -27,13 +27,7 @@
     </table>
      <button type="submit" class="ui-widget">Submit</button>
 </form>
-<form action="
-	{% if employee.department.id %}
-		{% url 'makechart:detail' employee.department.id %}
-	{% else %}
-		{% url 'makechart:index'%}
-	{% endif %}
-	" class="detail-update-form">
+<form action="{% url 'makechart:index' %}" class="detail-update-form">
      <button type="submit" class="ui-widget">Cancel</button>
 </form>
 	</div>

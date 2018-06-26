@@ -14,13 +14,28 @@
 {% if latest_teams_list %}
     <ul>
     {% for team in latest_teams_list %}
-        <li><a href="{% url 'makechart:detail' team.id %}">{{ team.name }}</a></li>
+        <li><a href="{% url 'makechart:detail' team.id %}">{{ team.name }}</a>
+       		<form action="{% url 'makechart:team-delete' team.id %}" method="post" style="display: inline;">
+        		{% csrf_token %}
+        		<button type="submit" class="btn btn-default btn-sm">Delete</button>
+    		</form>
+    		<form action="{% url 'makechart:team-update' team.id  %}" method="get" style="display: inline;">
+        	{% csrf_token %}
+        		<button type="submit" class="btn btn-default btn-sm">Update</button>
+    		</form>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No teams are available.</p>
 {% endif %}
+     <form action="{% url 'makechart:team-entry'  %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">Add Team</button>
+    </form>
 </body>
 </html>
   <head>
+
+
 

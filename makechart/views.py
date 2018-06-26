@@ -39,3 +39,18 @@ class EmployeeUpdate(UpdateView):
 class EmployeeDelete(DeleteView):
     model = Employee
     success_url = reverse_lazy('makechart:index')
+
+
+class TeamAdd(CreateView):
+    model = Team
+    fields = ['name']
+
+
+class TeamUpdate(UpdateView):
+    model = Team
+    fields = ['name']
+
+
+class TeamDelete(DeleteView):
+    model = Team
+    success_url = reverse_lazy('makechart:index')

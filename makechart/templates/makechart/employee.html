@@ -1,0 +1,12 @@
+<div id="dia" class="detail-dia">
+	<form action="/makechart/{{ form.id.value }}/post" method="post">{% csrf_token %}
+	<table>
+		{{form}}
+
+<!--		<input type="hidden" name="id" value={{employee.id}}>	-->
+<!--		<tr><td>Name</td><td><input type="text" name="name" value="{{employee.name}}" / ></td></tr>	-->
+<!--		<tr><td>Manager</td><td><input type="text" name="manager" value="{{employee.manager}}" / ></td></tr>	-->
+	</table>
+<input type="submit" class="edit-emp-button" value="Update" />
+</form>
+</div>

@@ -12,6 +12,10 @@ body {
 
 }
 
+.detail-dia {
+	display: none;
+}
+
 body .google-visualization-orgchart-node-medium, .orgchart-node {
 	font-size: 1.2em;
 }
@@ -46,4 +50,55 @@ a {
 
 li {
 	list-style-type: none;
+}
+
+.edit-emp-button[type='submit'] {
+	margin-top: 1em;
+	font-size: .8em;
+}
+
+td>span {
+	cursor:pointer;
+}
+
+
+/* title bar close button for jQuery UI dialog */
+div.ui-dialog-titlebar>button.ui-corner-all {
+	border: none;
+	background-color: #0e223a;
+}
+/* title bar close button for jQuery UI dialog */
+div.ui-dialog-titlebar>button.ui-corner-all>span {
+	background-image: url(images/ui-icons_bc9c5c_256x240.png);
+}
+
+button.ui-widget {
+	font-size: 1em;
+	display: inline;
+	margin: 10px 3px 3px 0px;
+}
+
+form.detail-update-form {
+	display: inline;
+}
+
+div.form-update-edit {
+	border: 2px solid #bc9c5c;
+	margin-top:	10%;
+	padding: 1em;
+}
+
+div.form-update-edit h3 {
+	margin:.5em 0em 1em 0em;
+}
+
+div.form-update-edit input, div.form-update-edit select {
+	font-family: "Lato", sans-serif;
+	font-size: 1em;
+	margin-bottom: 7px;
+}
+
+body.flex-body {
+	display: flex;
+	justify-content: center;
 }

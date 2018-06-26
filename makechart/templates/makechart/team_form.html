@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<head>
+  	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    </head>
+
+	<title></title>
+</head>
+<body class="flex-body">
+	<div class="form-update-edit">
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+{% if team.name %}
+    <h3>{{ team.name }}</strong></h3>
+{% else %}
+	 <h3>Add a New team</h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data" class="detail-update-form">
+    {% csrf_token %}
+    <table>
+    {% include 'makechart/form-template.html' %}
+    </table>
+     <button type="submit" class="ui-widget">Submit</button>
+</form>
+<form action="{% url 'makechart:index' %}" class="detail-update-form">
+     <button type="submit" class="ui-widget">Cancel</button>
+</form>
+	</div>
+</body>
+</html>

@@ -2,19 +2,47 @@
 
 <html>
   <head>
+  	<link rel="stylesheet" type="text/css" href="{% static 'makechart/jquery-ui.css' %}" />
   	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 
     </head>
+
+{% comment %} The elements which permit interacting with the Employee model {% endcomment %}
+
   <body>
   	<h1>{{ team.name }}</h1>
     <div id="chart_div"></div>
+
+{% for employee in team.employee_set.all %}
+
+ <div id="dia-{{employee.id}}" class="detail-dia">
+    <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-default btn-sm">Delete</button>
+    </form>
+    <form action="{% url 'makechart:employee-update' employee.id  %}" method="get" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-default btn-sm">Update</button>
+
+    </form>
+
+</div>
+
+{% endfor %}
   </body>
+
+     <form action="{% url 'makechart:employee-entry'  %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">Add Employee</button>
+    </form>
 </html>
 
-
+{% comment %} This is the part that uses the Google Charts API to build the visuals{% endcomment %}
 
 <script type="text/javascript">
 
@@ -23,7 +51,7 @@
 		{% for employee in team.employee_set.all %}
 		    var emp{{ employee.id }} = [{
 		                v: '{{ employee.id }}',
-		                f: '{{ employee.name }}'
+		                f: '<span id="node-{{ employee.id }}">{{ employee.name }}</span>'
 		            },'{{employee.manager_id }}', ''];
 		    formattedData.push(emp{{ employee.id }});
 		{% endfor %}
@@ -31,7 +59,6 @@
     }
 
 $(function() {
- console.log( "ready!" );
  chart();
 
     function chart() {
@@ -52,13 +79,36 @@ $(function() {
             data.addRows(parseData());
             // Create the chart.
             var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            // Draw the chart
             chart.draw(data, {
                 allowHtml: true,
                 allowCollapse: true,
                 nodeClass: "orgchart-node",
             });
+            google.visualization.events.addListener(chart, 'select', selectHandler);
+            function selectHandler(e) {
+ 				anEvent();
+			}
+
         }
     }
+
+    //Create the jQuery UI dialog for showing the Update and Delete buttons
+    function anEvent() {
+    	{% for employee in team.employee_set.all %}
+
+		$("#node-{{employee.id}}").parents("td").on("click", function() {
+		    $("#dia-{{employee.id}}").dialog({
+		        appendTo: "body",
+		        modal: true,
+		        width: 500,
+		        title: "Edit or Delete {{employee.name}}"
+		    });
+		});
+		{% endfor %}
+    }
 });
+
+
+
 </script>

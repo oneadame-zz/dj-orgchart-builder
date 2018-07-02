@@ -1,7 +1,8 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.shortcuts import get_object_or_404
 from .models import Team, Employee
 
 
@@ -28,12 +29,12 @@ class DetailView(generic.DetailView):
 
 class EmployeeAdd(CreateView):
     model = Employee
-    fields = ['name', 'manager', 'department']
+    fields = ['name', 'manager']
 
 
 class EmployeeUpdate(UpdateView):
     model = Employee
-    fields = ['name', 'manager', 'department']
+    fields = ['name', 'manager']
 
 
 class EmployeeDelete(DeleteView):
@@ -43,12 +44,23 @@ class EmployeeDelete(DeleteView):
 
 class TeamAdd(CreateView):
     model = Team
-    fields = ['name']
+    fields = ['name', 'desc', 'employees', 'lead']
 
 
 class TeamUpdate(UpdateView):
     model = Team
-    fields = ['name']
+    template_name = 'makechart/team_form_wip.html'
+    fields = ['name', 'desc', 'employees', 'lead']
+    success_url = reverse_lazy('makechart:index')
+
+
+def confirm_update(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    team.name = request.POST['name']
+    team.desc = request.POST['desc']
+    team.lead = team.employees.get(pk=request.POST['lead'])
+    team.save()
+    return HttpResponseRedirect(reverse('makechart:index'))
 
 
 class TeamDelete(DeleteView):

@@ -1,35 +1,41 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<head>
-  	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    </head>
+{% block title %}
+  {% if team.name %}Edit Team
+  {% else %}Create Team
+  {% endif %}
+{% endblock %}
 
-	<title></title>
-</head>
-<body class="flex-body">
-	<div class="form-update-edit">
+{% block topbanner %}
+  {% if team.name %}Edit {{team.name}}
+  {% else %}Create Team
+  {% endif %}
+{% endblock %}
+
+{% block maincontent %}
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
-{% if team.name %}
-    <h3>{{ team.name }}</strong></h3>
-{% else %}
-	 <h3>Add a New team</h3>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data" class="detail-update-form">
-    {% csrf_token %}
-    <table>
-    {% include 'makechart/form-template.html' %}
+<div class="flex-container-center">
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+      <tbody>
+        <form action="" method="post" enctype="multipart/form-data" class="detail-update-form">
+        {% csrf_token %}
+        {% include 'makechart/form-template.html' %}
+            <tr>
+              <td>
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>
+              </td>
+        }
+        </form>
+              <td>
+              <form action="{% url 'makechart:index' %}" class="detail-update-form">
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
+              </form>
+          </td>
+        </tr>
+      </tbody>
     </table>
-     <button type="submit" class="ui-widget">Submit</button>
-</form>
-<form action="{% url 'makechart:index' %}" class="detail-update-form">
-     <button type="submit" class="ui-widget">Cancel</button>
-</form>
-	</div>
-</body>
-</html>
+  </form>
+</div>
+{% endblock %}

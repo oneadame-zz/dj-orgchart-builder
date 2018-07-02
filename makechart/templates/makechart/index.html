@@ -1,41 +1,66 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-	<title>
-		List of Org Charts
-	</title>
-</head>
-<body>
-	<h1 class="align-left">List of Teams</h1>
-{% if latest_teams_list %}
-    <ul>
+{% extends "base.html" %}
+
+{% block title %} All Teams {% endblock %}
+
+{% block topbanner %}Teams{% endblock %}
+
+{% block maincontent %}
+    {% if latest_teams_list %}
+      <div class="index-container">
     {% for team in latest_teams_list %}
-        <li><a href="{% url 'makechart:detail' team.id %}">{{ team.name }}</a>
-       		<form action="{% url 'makechart:team-delete' team.id %}" method="post" style="display: inline;">
-        		{% csrf_token %}
-        		<button type="submit" class="btn btn-default btn-sm">Delete</button>
-    		</form>
-    		<form action="{% url 'makechart:team-update' team.id  %}" method="get" style="display: inline;">
-        	{% csrf_token %}
-        		<button type="submit" class="btn btn-default btn-sm">Update</button>
-    		</form>
-        </li>
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{ team.name }}</h2>
+          </div>
+            <div class="mdl-card__supporting-text no-padding-bottom">
+                <div><b>Team Lead</b>: {{ team.lead }}</div>
+                <div><b>Employee Count</b>: {{team.employee_count}}</div>
+            </div>
+            <div class="mdl-card__supporting-text">
+                {{ team.desc }}
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <form action="{% url 'makechart:team-delete' team.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Delete</button>
+                </form>
+                <form action="{% url 'makechart:team-update' team.id  %}" method="get" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Update</button>
+                </form>
+                <a href="{% url 'makechart:detail' team.id %}">
+                      <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">View</button>
+                </a>
+            </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">share</i>
+            </button>
+          </div>
+        </div>
     {% endfor %}
-    </ul>
-{% else %}
-    <p>No teams are available.</p>
-{% endif %}
-     <form action="{% url 'makechart:team-entry'  %}" method="get" style="display: inline;">
+    {% else %}
+        <p>&nbsp;</p>
+    {% endif %}
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">New Team</h2>
+        </div>
+          <div class="mdl-card__supporting-text">
+              Click the 'ADD TEAM' button to create a new team.
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+             <form action="{% url 'makechart:team-entry'  %}" method="get" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-default btn-sm">Add Team</button>
-    </form>
-</body>
-</html>
-  <head>
-
-
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add Team</button>
+               </form>
+          </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+          </button>
+        </div>
+      </div>
+    </div>
+{% endblock %}
 

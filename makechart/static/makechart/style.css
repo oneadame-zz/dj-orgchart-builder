@@ -1,8 +1,20 @@
 body {
-	background-color: #0e223a;
-    font-family: "Lato", sans-serif;
+	background-color: #ffffff;
+    font-family:  'Roboto','Helvetica','Arial',sans-serif;
     color: #ffffff;
     font-size: 1.3em;
+    display: flex;
+    flex-direction: column;
+}
+
+div.content-container {
+	 flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+  background-color: rgb(83,109,254);
+  min-height: 3em;
 }
 
 .orgchart-node {
@@ -14,6 +26,28 @@ body {
 
 .detail-dia {
 	display: none;
+}
+
+div.top-banner {
+    background-color: rgb(83,109,254);
+    margin-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.index-container > .mdl-card {
+	margin: 1em;
+    min-width: 330px;
+    min-height: 165px;
+}
+
+.mdl-card > .mdl-card__title {
+	background: rgb(83,109,254);
+    color: white
 }
 
 body .google-visualization-orgchart-node-medium, .orgchart-node {
@@ -98,7 +132,103 @@ div.form-update-edit input, div.form-update-edit select {
 	margin-bottom: 7px;
 }
 
-body.flex-body {
+.flex-container-center {
 	display: flex;
 	justify-content: center;
+}
+
+.flex-column {
+	flex-direction: column;
+	align-items: center;
+}
+
+div.index-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mdl-data-table  {
+	color: gray;
+	font-family: 'Roboto','Helvetica','Arial',sans-serif;
+	margin-bottom: 3em;
+}
+
+/* Do this so forms can be automatically built */
+
+input[type='text'] {
+	border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    display: block;
+    font-size: 16px;
+    font-family: "Helvetica","Arial",sans-serif;
+    margin: 0;
+    padding: 4px 0;
+    width: 100%;
+    background: 0 0;
+    text-align: left;
+    color: inherit;
+}
+
+div.no-padding-bottom {
+	padding: 16px 16px 0px 16px;
+}
+
+select {
+	border: 1px solid rgba(0,0,0,.12);
+    display: block;
+    font-size: 16px;
+    font-family: "Helvetica","Arial",sans-serif;
+    margin: 0;
+    padding: 4px 0;
+    width: 100%;
+    background: 0 0;
+    text-align: left;
+    color: inherit;
+}
+
+.mdl-data-table .center-th  {
+	text-align: center;
+	font-size: 1.1em;
+}
+
+.mdl-data-table .right-th {
+	text-align: right;
+	font-size: 1.1em;
+}
+
+.mdl-data-table th.no-padding-right {
+	padding-right: 0px;
+}
+
+
+
+div.profile-small {
+	height: 24px;
+	width: 24px;
+}
+
+table.add-margin {
+	margin: 3em;
+}
+
+div.baseline {
+	align-items: baseline;
+}
+
+div.submit-button-container {
+	text-align: center;
+}
+
+div#searchcontainer {
+	display: flex;
+	justify-content: center;
+	color: rgb(83,109,254);
+	align-items: center;
+}
+
+input#search {
+	font-size: 2em;
+	text-align: center;
+	width: 50%;
 }

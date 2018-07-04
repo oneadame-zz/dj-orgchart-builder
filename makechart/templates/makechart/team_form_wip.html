@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if team.name %}Edit Team
+  {% else %}Create Team
+  {% endif %}
+{% endblock %}
+
+{% block topbanner %}
+  {% if team.name %}Edit {{team.name}}
+  {% else %}Create Team
+  {% endif %}
+{% endblock %}
+
+{% block maincontent %}
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<div class="flex-container-center flex-column">
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+      <thead><tr><th class="center-th" colspan="3">Team Configuration</td></th></tr></thead>
+      <tbody>
+        <form action="{% url 'makechart:confirm-update' team.id  %}" method="post" enctype="multipart/form-data" class="detail-update-form">
+        {% csrf_token %}
+          <span class="text-danger la">{{ form.name.errors }}</span>
+          <tr>
+            <td><label for="{{ form.name.id_for_label }}">Name</label></td>
+            <td colspan="2">{{ form.name }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.desc.id_for_label }}">Description</label></td>
+            <td colspan="2">{{ form.desc }}</td>
+          </tr>
+          <tr>
+            <td><label for="{{ form.lead.id_for_label }}">Team Lead</label></td>
+            <td colspan="2">
+              <select name="lead" required="" id="id_lead">
+                <option value="">---------</option>
+                {% for employee in team.employees.all %}
+                <option value="{{employee.id}}" {% if team.lead == employee %} selected="selected"{% endif %} >{{employee.name}}</option>
+                {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>
+            </td>
+            <td></td>
+        </form>
+              <td>
+              <form action="{% url 'makechart:index' %}" class="detail-update-form">
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
+              </form>
+          </td>
+        </tr>
+  </form>
+      <thead>
+        <tr>
+          <th class="center-th" colspan="3">Team Members
+
+            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">more_vert</i>
+            </button>
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+              <a href="{% url 'makechart:team-member-update' team.id %}"><li class="mdl-menu__item">Add or remove</li></a>
+            </ul>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for employee in team.employees.all %}
+        <tr>
+          <td><div class="icon icon-ic_play-circle_outline_black_24dp profile-small" style="background:url('{% static 'makechart/images/baseline-account_circle-24px.svg' %}')"></div></td>
+          <td><span>{{employee.name}}</span></td>
+          <td>
+            <form action="{% url 'makechart:employee-update' employee.id  %}" method="get">
+              {% csrf_token %}
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Edit</button>
+        </form></td>
+            </td></tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

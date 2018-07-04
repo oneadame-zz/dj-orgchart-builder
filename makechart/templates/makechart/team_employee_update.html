@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if team.name %}Edit Members of Team
+  {% else %}Edit Members of New Team
+  {% endif %}
+{% endblock %}
+
+{% block topbanner %}
+  {% if team.name %}Edit Members: {{team.name}}
+  {% else %}Edit Members of New Team
+  {% endif %}
+{% endblock %}
+
+{% block maincontent %}
+<div class="flex-container-center baseline">
+
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp add-margin">
+    <thead>
+      <tr>
+        <th class="center-th" colspan="3">All Employees</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for notemployee in team.notemployees %}
+       <tr>
+        <td>
+          <div class="icon icon-ic_play-circle_outline_black_24dp profile-small" style="background:url('{% static 'makechart/images/baseline-account_circle-24px.svg' %}')">
+          </div>
+        </td>
+        <td><span>{{notemployee.name}}</span></td>
+        <td>
+          <form action="{% url 'makechart:team-member-add' team.id  %}" method="post">
+          {% csrf_token %}
+            <input type="hidden" id="id" name="id" value="{{notemployee.id}}">
+            <button class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">add</i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="center-th" colspan="3">Existing Team Members</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for employee in team.employees.all %}
+      <tr>
+        <td>
+          <div class="icon icon-ic_play-circle_outline_black_24dp profile-small" style="background:url('{% static 'makechart/images/baseline-account_circle-24px.svg' %}')">
+          </div>
+        </td>
+        <td><span>{{employee.name}}</span></td>
+        <td>
+          <form action="{% url 'makechart:team-member-rm' team.id  %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" id="id" name="id" value="{{employee.id}}">
+            <button class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">remove</i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+<div class="submit-button-container">
+  <a href="{% url 'makechart:team-update' team.id  %}"><button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Done</button>
+  </a>
+</div>
+{% endblock %}

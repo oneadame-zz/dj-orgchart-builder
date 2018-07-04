@@ -1,36 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Employee Index
+{% endblock %}
+
+{% block topbanner %}
+  Employee Index
+{% endblock %}
+
+{% block maincontent %}
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<div id="searchcontainer">
+    <i class="material-icons">search</i><input id="search" type="text">
+</div>
+<div class="index-container">
 {% if employee_list %}
-
     {% for employee in employee_list %}
-
-    <ul>
-
-    <li>
-        <h2>{{ employee.id }}</h2>
-        <h2>{{ employee.name }}</h2>
-        <h2>{{ employee.manager }} </h2>
-        <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-default btn-sm">Delete</button>
-        </form>
-           <form action="{% url 'makechart:employee-update' employee.id  %}" method="get" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-default btn-sm">Update</button>
-        </form>
-
-
-    </li>
-
-
-    </ul>
-
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{ employee.name }}</h2>
+          </div>
+            <div class="mdl-card__supporting-text no-padding-bottom">
+                <div><b>Team{% if employee.multipleteams %}s{% endif %}</b>: {{ employee.str_teams }}</div>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Photo here
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Delete</button>
+                </form>
+                <form action="{% url 'makechart:employee-update' employee.id  %}" method="get" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Update</button>
+                </form>
+            </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">share</i>
+            </button>
+          </div>
+        </div>
 {% endfor %}
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Add a New Employee</h2>
+    </div>
+    <div class="mdl-card__supporting-text">Click Add to add a new employee.</div>
+    <div class="mdl-card__supporting-text"></div>
+    <div class="mdl-card__actions mdl-card--border">
+        <form action="{% url 'makechart:employee-entry'  %}" method="get" style="display: inline;">
+        {% csrf_token %}
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add Employee</button>
+        </form>
+    </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">share</i>
+            </button>
+          </div>
+        </div>
+    </div>
 
-    {% else %}
-    <h1>No employees found on the database.</h1>
 
+
+{% else %}
+<h1>No employees found on the database.</h1>
 
 {% endif %}
-     <form action="{% url 'makechart:employee-entry'  %}" method="get" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-default btn-sm">Add Employee</button>
-    </form>
+</div>
+
+<script type="text/javascript">
+$("#search").on("keyup", function() {
+    var cards = $(".demo-card-wide");
+    var me = $(this);
+    search = me.val().toUpperCase();
+    if (search.length) {
+        cards.hide();
+        cards.each(function() {
+            var me = $(this);
+            text = me.find("h2").html().toUpperCase();
+            text.indexOf(search) > -1 ? me.show() : me.hide();
+        });
+
+    } else {
+       cards.show();
+    }
+});
+</script>
+
+{% endblock %}

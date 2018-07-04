@@ -2,9 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {% if team.name %}Edit Team
-  {% else %}Create Team
-  {% endif %}
+Employee Index
 {% endblock %}
 
 {% block topbanner %}
@@ -15,6 +13,9 @@
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
+<div id="searchcontainer">
+    <i class="material-icons">search</i><input id="search" type="text">
+</div>
 <div class="index-container">
 {% if employee_list %}
     {% for employee in employee_list %}
@@ -23,7 +24,7 @@
             <h2 class="mdl-card__title-text">{{ employee.name }}</h2>
           </div>
             <div class="mdl-card__supporting-text no-padding-bottom">
-                <div><b>Team</b>: {{ employee.get_employee_teams }}</div>
+                <div><b>Team{% if employee.multipleteams %}s{% endif %}</b>: {{ employee.str_teams }}</div>
             </div>
             <div class="mdl-card__supporting-text">
                 Photo here
@@ -72,4 +73,24 @@
 
 {% endif %}
 </div>
+
+<script type="text/javascript">
+$("#search").on("keyup", function() {
+    var cards = $(".demo-card-wide");
+    var me = $(this);
+    search = me.val().toUpperCase();
+    if (search.length) {
+        cards.hide();
+        cards.each(function() {
+            var me = $(this);
+            text = me.find("h2").html().toUpperCase();
+            text.indexOf(search) > -1 ? me.show() : me.hide();
+        });
+
+    } else {
+       cards.show();
+    }
+});
+</script>
+
 {% endblock %}

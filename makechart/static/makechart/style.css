@@ -219,3 +219,16 @@ div.baseline {
 div.submit-button-container {
 	text-align: center;
 }
+
+div#searchcontainer {
+	display: flex;
+	justify-content: center;
+	color: rgb(83,109,254);
+	align-items: center;
+}
+
+input#search {
+	font-size: 2em;
+	text-align: center;
+	width: 50%;
+}

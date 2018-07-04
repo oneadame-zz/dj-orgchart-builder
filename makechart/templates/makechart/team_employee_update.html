@@ -23,8 +23,8 @@
       </tr>
     </thead>
     <tbody>
-    {% for notemployee in team.notemployees.all %}
-      <tr>
+    {% for notemployee in team.notemployees %}
+       <tr>
         <td>
           <div class="icon icon-ic_play-circle_outline_black_24dp profile-small" style="background:url('{% static 'makechart/images/baseline-account_circle-24px.svg' %}')">
           </div>
@@ -43,7 +43,6 @@
       {% endfor %}
       </tbody>
   </table>
-
 
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
     <thead>

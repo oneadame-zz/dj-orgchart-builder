@@ -38,7 +38,7 @@
               <select name="lead" required="" id="id_lead">
                 <option value="">---------</option>
                 {% for employee in team.employees.all %}
-                <option value="{{employee.id}}">{{employee.name}}</option>
+                <option value="{{employee.id}}" {% if team.lead == employee %} selected="selected"{% endif %} >{{employee.name}}</option>
                 {% endfor %}
             </td>
           </tr>
@@ -63,7 +63,7 @@
               <i class="material-icons">more_vert</i>
             </button>
               <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
-              <li class="mdl-menu__item"><a href="{% url 'makechart:team-member-update' team.id %}">Add or remove</a></li>
+              <a href="{% url 'makechart:team-member-update' team.id %}"><li class="mdl-menu__item">Add or remove</li></a>
             </ul>
           </th>
         </tr>

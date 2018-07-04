@@ -49,6 +49,8 @@
           <div class="mdl-card__supporting-text">
               Click the 'ADD TEAM' button to create a new team.
           </div>
+          <div class="mdl-card__supporting-text no-padding-bottom"></div>
+          <div class="mdl-card__supporting-text no-padding-bottom"></div>
           <div class="mdl-card__actions mdl-card--border">
              <form action="{% url 'makechart:team-entry'  %}" method="get" style="display: inline;">
             {% csrf_token %}
@@ -62,5 +64,6 @@
         </div>
       </div>
     </div>
+
 {% endblock %}
 

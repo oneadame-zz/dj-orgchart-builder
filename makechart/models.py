@@ -19,6 +19,7 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
     desc = models.CharField(max_length=200)
     employees = models.ManyToManyField(Employee)
+    notemployees = models.ManyToManyField(Employee, 'notemployees')
     lead = models.ForeignKey(Employee, related_name='Employee', on_delete=models.CASCADE)
 
     def employee_count(self):

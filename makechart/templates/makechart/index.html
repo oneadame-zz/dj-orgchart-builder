@@ -28,7 +28,7 @@
                 {% csrf_token %}
                 <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Update</button>
                 </form>
-                <a href="{% url 'makechart:detail' team.id %}">
+                <a href="{% url 'makechart:detail' team.id %}" target="blank">
                       <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">View</button>
                 </a>
             </div>

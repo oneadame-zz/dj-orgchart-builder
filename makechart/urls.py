@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamUpdate.as_view(), name='team-update'),
     #orchartmaker/team/(?P<pk>[0-9]+)/delete
     url(r'^t/(?P<pk>[0-9]+)/delete$', views.TeamDelete.as_view(), name='team-delete'),
+    url(r'^teammembers/(?P<pk>[0-9]+)/$', views.TeamMemberUpdate.as_view(), name='team-member-update'),
+    url(r'^teammembersadd/(?P<pk>[0-9]+)/$', views.add_member, name='team-member-add'),
+    url(r'^teammembersrm/(?P<pk>[0-9]+)/$', views.rm_member, name='team-member-rm')
 ]

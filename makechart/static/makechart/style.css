@@ -187,12 +187,35 @@ select {
     color: inherit;
 }
 
-.mdl-data-table .center-th {
+.mdl-data-table .center-th  {
 	text-align: center;
 	font-size: 1.1em;
 }
 
+.mdl-data-table .right-th {
+	text-align: right;
+	font-size: 1.1em;
+}
+
+.mdl-data-table th.no-padding-right {
+	padding-right: 0px;
+}
+
+
+
 div.profile-small {
 	height: 24px;
 	width: 24px;
+}
+
+table.add-margin {
+	margin: 3em;
+}
+
+div.baseline {
+	align-items: baseline;
+}
+
+div.submit-button-container {
+	text-align: center;
 }

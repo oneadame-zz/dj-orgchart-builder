@@ -2,41 +2,19 @@
 
 <html>
   <head>
-  	<link rel="stylesheet" type="text/css" href="{% static 'makechart/jquery-ui.css' %}" />
   	<link rel="stylesheet" type="text/css" href="{% static 'makechart/style.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-indigo.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
-    </head>
+  </head>
 
 {% comment %} The elements which permit interacting with the Employee model {% endcomment %}
 
   <body style="background-color:#0e223a">
   	<h1>{{ team.name }}</h1>
     <div id="chart_div"></div>
-
-{% for employee in team.employees.all %}
-
- <div id="dia-{{employee.id}}" class="detail-dia">
-    <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-default btn-sm">Delete</button>
-    </form>
-    <form action="{% url 'makechart:employee-update' employee.id  %}" method="get" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-default btn-sm">Update</button>
-
-    </form>
-
-</div>
-
-{% endfor %}
 
   </body>
 
@@ -93,21 +71,6 @@ $(function() {
 			}
 
         }
-    }
-
-    //Create the jQuery UI dialog for showing the Update and Delete buttons
-    function anEvent() {
-    	{% for employee in team.employees.all %}
-
-		$("#node-{{employee.id}}").parents("td").on("click", function() {
-		    $("#dia-{{employee.id}}").dialog({
-		        appendTo: "body",
-		        modal: true,
-		        width: 500,
-		        title: "Edit or Delete {{employee.name}}"
-		    });
-		});
-		{% endfor %}
     }
 });
 

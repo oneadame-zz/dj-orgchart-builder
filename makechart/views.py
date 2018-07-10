@@ -19,6 +19,8 @@ class EmployeeIndex(generic.ListView):
 
     context_object_name = 'employee_list'
 
+# TODO: Comment this horrific mess
+
     def get_queryset(self):
         e = []
         teams = Team.objects.all()
@@ -56,6 +58,19 @@ class EmployeeAdd(CreateView):
 class EmployeeUpdate(UpdateView):
     model = Employee
     fields = ['name', 'manager']
+
+
+def confirm_emp_update(request, employee_id):
+    emp = get_object_or_404(Employee, pk=employee_id)
+    emp.name = request.POST['name']
+    emp.manager = Employee.objects.get(pk=request.POST['manager'])
+    newteam = Team.objects.filter(pk=request.POST['team']).first()
+    oldteam = Team.objects.filter(name=request.POST['oldteam']).first()
+    oldteam.employees.remove(employee_id)
+    newteam.employees.add(employee_id)
+    newteam.save()
+    emp.save()
+    return HttpResponseRedirect(reverse('makechart:employee-index'))
 
 
 class EmployeeDelete(DeleteView):

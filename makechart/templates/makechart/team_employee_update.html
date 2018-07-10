@@ -19,10 +19,11 @@
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp add-margin">
     <thead>
       <tr>
-        <th class="center-th" colspan="3">All Employees</th>
+        <th class="center-th" colspan="3">Unattached Employees</th>
       </tr>
     </thead>
     <tbody>
+    {% if team.notemployees %}
     {% for notemployee in team.notemployees %}
        <tr>
         <td>
@@ -41,7 +42,11 @@
         </td>
       </tr>
       {% endfor %}
+    {% else %}
+    <tr><td>No employees to display.</td></tr>
+    {% endif %}
       </tbody>
+    }
   </table>
 
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">

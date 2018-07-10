@@ -19,9 +19,15 @@
 <div class="flex-container-center">
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
       <tbody>
-        <form action="" method="post" enctype="multipart/form-data" class="detail-update-form">
+        <form action="{% url 'makechart:confirm-emp-update' employee.id  %}" method="post" enctype="multipart/form-data" class="detail-update-form">
         {% csrf_token %}
         {% include 'makechart/form-template.html' %}
+        <tr><td>Team</td><td> <select name="team" required="" id="id_team">
+                <option value="">---------</option>
+                {% for team in employee.allTeams %}
+                <option value="{{team.id}}" {% if team.name == employee.getTeam %} selected="selected"{% endif %} >{{team.name}}</option>
+                {% endfor %}<input type="hidden" name="oldteam" id="id_oldteam" value="{{employee.getTeam}}"></td></tr>
+              </select>
             <tr>
               <td>
                 <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>

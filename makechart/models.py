@@ -8,6 +8,15 @@ class Employee(models.Model):
     manager = models.ForeignKey('self', on_delete=models.CASCADE)
     lead = models.BooleanField(default=False)
 
+    def getTeam(self):
+        teams = Team.objects.all()
+        for t in teams:
+            if self in t.employees.all():
+                return t.name
+
+    def allTeams(self):
+        return Team.objects.all()
+
     def __str__(self):
         return self.name
 
@@ -25,11 +34,17 @@ class Team(models.Model):
         return self.employees.count()
 
     def notemployees(self):
-        not_e = []
-        for e in Employee.objects.all():
-            if e not in self.employees.all():
-                not_e.append(e)
-        return not_e
+        unattached = []
+        attached = []
+        emps = Employee.objects.all()
+        teams = Team.objects.all()
+        for t in teams:
+            for e in t.employees.all():
+                attached.append(e)
+        for e in emps:
+            if e not in attached:
+                unattached.append(e)
+        return unattached
 
     def __str__(self):
         return self.name

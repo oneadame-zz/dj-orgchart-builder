@@ -9,6 +9,7 @@ urlpatterns = [
     path('e/', views.EmployeeIndex.as_view(), name='employee-index'),
     path('t<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:team_id>/confirm_update/', views.confirm_update, name='confirm-update'),
+    path('<int:employee_id>/confirm_employee_update/', views.confirm_emp_update, name='confirm-emp-update'),
     #orchartmaker/employee/entry
     url(r'^employee/entry/$', views.EmployeeAdd.as_view(), name='employee-entry'),
     #orchartmaker/employee/2

@@ -9,8 +9,6 @@
 * Create and configure teams, define team structure
 * View Org Charts for each team
 ### Todo
-* Ability to assign teams when employee is created
-* Remove remnants of jQ UI
 * Add upload of employee photo, display in charts and elsewhere
 * Add hamburger menu for navigating between views
 * Fix display scaling

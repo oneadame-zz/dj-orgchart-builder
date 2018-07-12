@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^employee/entry/$', views.EmployeeAdd.as_view(), name='employee-entry'),
     #orchartmaker/employee/2
     url(r'^employee/(?P<pk>[0-9]+)/$', views.EmployeeUpdate.as_view(), name='employee-update'),
+    url(r'^employeep/(?P<pk>[0-9]+)/$', views.uploadPhoto, name='employee-photo'),
     #orchartmaker/employee/(?P<pk>[0-9]+)/delete
     url(r'^album/(?P<pk>[0-9]+)/delete$', views.EmployeeDelete.as_view(), name='employee-delete'),
     #orchartmaker/team/entry

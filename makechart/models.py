@@ -7,6 +7,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=50)
     manager = models.ForeignKey('self', on_delete=models.CASCADE)
     lead = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to='uploads/')
 
     def getTeam(self):
         teams = Team.objects.all()

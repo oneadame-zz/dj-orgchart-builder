@@ -18,6 +18,7 @@
 {% endif %}
 <div class="flex-container-center">
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+    <thead><tr><th class="center-th" colspan="2">Employee Details</th></tr></thead>
       <tbody>
         <form action="{% url 'makechart:confirm-emp-update' employee.id  %}" method="post" enctype="multipart/form-data" class="detail-update-form">
         {% csrf_token %}
@@ -38,6 +39,22 @@
               <form action="{% url 'makechart:index' %}" class="detail-update-form">
                 <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
               </form>
+          </td>
+        </tr>
+        <tr>
+          <th class="center-th" colspan="2">Employee Photo</th>
+        </tr>
+        <tr>
+          <td colspan="2" class="center-th"><img src="{{employee.photo.url}}">No Current Photo<br>
+            <form action="{% url 'makechart:employee-photo' employee.id %}" method="post" enctype="multipart/form-data" class="detail-update-form">
+              <input type="file" name="photo" id="id_photo" accept="image/*">
+</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="center-th">
+            {% csrf_token %}
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Upload image...</button>
+            </form>
           </td>
         </tr>
       </tbody>

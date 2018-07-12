@@ -4,6 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
 from .models import Team, Employee
+from django import forms
 
 
 class IndexView(generic.ListView):
@@ -60,6 +61,10 @@ class EmployeeUpdate(UpdateView):
     fields = ['name', 'manager']
 
 
+class EmployeePhoto(forms.Form):
+    photo = forms.ImageField()
+
+
 def confirm_emp_update(request, employee_id):
     emp = get_object_or_404(Employee, pk=employee_id)
     emp.name = request.POST['name']
@@ -71,6 +76,15 @@ def confirm_emp_update(request, employee_id):
     newteam.save()
     emp.save()
     return HttpResponseRedirect(reverse('makechart:employee-index'))
+
+
+def uploadPhoto(request, pk):
+    form = EmployeePhoto(request.POST, request.FILES)
+    if form.is_valid():
+        emp = get_object_or_404(Employee, pk=pk)
+        emp.photo = form.cleaned_data['photo']
+        emp.save()
+        return HttpResponseRedirect(reverse_lazy('makechart:employee-update', args=[pk]))
 
 
 class EmployeeDelete(DeleteView):

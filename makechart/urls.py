@@ -1,6 +1,5 @@
 from django.urls import path
 from django.conf.urls import url
-
 from . import views
 
 app_name = 'makechart'
@@ -10,10 +9,12 @@ urlpatterns = [
     path('t<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:team_id>/confirm_update/', views.confirm_update, name='confirm-update'),
     path('<int:employee_id>/confirm_employee_update/', views.confirm_emp_update, name='confirm-emp-update'),
+    path('$/confirm_employee_update/', views.confirm_emp_update, name='confirm-emp-add'),
     #orchartmaker/employee/entry
     url(r'^employee/entry/$', views.EmployeeAdd.as_view(), name='employee-entry'),
     #orchartmaker/employee/2
     url(r'^employee/(?P<pk>[0-9]+)/$', views.EmployeeUpdate.as_view(), name='employee-update'),
+    url(r'^employeep/(?P<pk>[0-9]+)/$', views.uploadPhoto, name='employee-photo'),
     #orchartmaker/employee/(?P<pk>[0-9]+)/delete
     url(r'^album/(?P<pk>[0-9]+)/delete$', views.EmployeeDelete.as_view(), name='employee-delete'),
     #orchartmaker/team/entry

@@ -4,6 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
 from .models import Team, Employee
+from django import forms
 
 
 class IndexView(generic.ListView):
@@ -60,17 +61,34 @@ class EmployeeUpdate(UpdateView):
     fields = ['name', 'manager']
 
 
-def confirm_emp_update(request, employee_id):
-    emp = get_object_or_404(Employee, pk=employee_id)
-    emp.name = request.POST['name']
-    emp.manager = Employee.objects.get(pk=request.POST['manager'])
+class EmployeePhoto(forms.Form):
+    photo = forms.ImageField()
+
+
+def confirm_emp_update(request, employee_id="new"):
+    if employee_id ==  "new":
+        emp = Employee.objects.create(name=request.POST['name'], manager=Employee.objects.get(pk=request.POST['manager']))
+    else:
+        emp = get_object_or_404(Employee, pk=employee_id)
+        emp.name = request.POST['name']
+        emp.manager = Employee.objects.get(pk=request.POST['manager'])
     newteam = Team.objects.filter(pk=request.POST['team']).first()
-    oldteam = Team.objects.filter(name=request.POST['oldteam']).first()
-    oldteam.employees.remove(employee_id)
-    newteam.employees.add(employee_id)
+    if employee_id != "new":
+        oldteam = Team.objects.filter(name=request.POST['oldteam']).first()
+        oldteam.employees.remove(employee_id)
+    newteam.employees.add(emp.id)
     newteam.save()
     emp.save()
     return HttpResponseRedirect(reverse('makechart:employee-index'))
+
+
+def uploadPhoto(request, pk):
+    form = EmployeePhoto(request.POST, request.FILES)
+    if form.is_valid():
+        emp = get_object_or_404(Employee, pk=pk)
+        emp.photo = form.cleaned_data['photo']
+        emp.save()
+        return HttpResponseRedirect(reverse_lazy('makechart:employee-update', args=[pk]))
 
 
 class EmployeeDelete(DeleteView):

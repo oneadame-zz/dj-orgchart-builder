@@ -3,10 +3,11 @@ from django.urls import reverse
 
 
 class Employee(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     manager = models.ForeignKey('self', on_delete=models.CASCADE)
     lead = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to='uploads/',default="uploads/blank.png")
 
     def getTeam(self):
         teams = Team.objects.all()
@@ -17,7 +18,7 @@ class Employee(models.Model):
     def allTeams(self):
         return Team.objects.all()
 
-    def __str__(self):
+    def __str__(self): 
         return self.name
 
     def get_absolute_url(self):

@@ -14,19 +14,30 @@
 
 {% block maincontent %}
 {% if error_message %}
+{% load makechart_custom_tags %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
 <div class="flex-container-center">
   <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+    <thead><tr><th class="center-th" colspan="2">Employee Details</th></tr></thead>
       <tbody>
-        <form action="{% url 'makechart:confirm-emp-update' employee.id  %}" method="post" enctype="multipart/form-data" class="detail-update-form">
+        <form action="{% if employee.name %} 
+                      {% url 'makechart:confirm-emp-update' employee.id  %}
+                      {% else %}
+                      {% url 'makechart:confirm-emp-add' %}
+                      {% endif  %}" method="post" enctype="multipart/form-data" class="detail-update-form">
         {% csrf_token %}
         {% include 'makechart/form-template.html' %}
         <tr><td>Team</td><td> <select name="team" required="" id="id_team">
                 <option value="">---------</option>
+                {% if employee.name %}
                 {% for team in employee.allTeams %}
                 <option value="{{team.id}}" {% if team.name == employee.getTeam %} selected="selected"{% endif %} >{{team.name}}</option>
-                {% endfor %}<input type="hidden" name="oldteam" id="id_oldteam" value="{{employee.getTeam}}"></td></tr>
+                {% endfor %}
+                <input type="hidden" name="oldteam" id="id_oldteam" value="{{employee.getTeam}}"></td></tr>
+                {% else %}
+                {% showAllTeams %}
+                {% endif %}
               </select>
             <tr>
               <td>
@@ -35,13 +46,41 @@
         }
         </form>
               <td>
-              <form action="{% url 'makechart:index' %}" class="detail-update-form">
+              <form action="{% url 'makechart:employee-index' %}" class="detail-update-form">
                 <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
               </form>
           </td>
         </tr>
+        {% if employee.id %}
+        <tr>
+          <th class="center-th" colspan="2">Employee Photo</th>
+        </tr>
+        <tr>
+          <td colspan="2" class="center-th">{% if employee.photo %} <img class="photo-preview" src="{{employee.photo.url}}"> {% else %}No Current Photo{% endif %}<br>
+            <form id="imageform" action="{% url 'makechart:employee-photo' employee.id %}" method="post" enctype="multipart/form-data" class="detail-update-form">
+              <input type="file" name="photo" id="id_photo" accept="image/*">
+</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="center-th">
+            {% csrf_token %}
+            <button id="selectfile" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Upload image...</button>
+            </form>
+          </td>
+        </tr>
+        {% endif %}
       </tbody>
     </table>
   </form>
 </div>
+<script type="text/javascript">
+  $(function() {
+    $("#selectfile").on("click", function() {
+      $("#id_photo").click();
+    })
+    $("#id_photo").on("change", function () {
+        $("#imageform").submit();
+    })
+});
+</script>
 {% endblock %}

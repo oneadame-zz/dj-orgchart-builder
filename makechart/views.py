@@ -65,14 +65,18 @@ class EmployeePhoto(forms.Form):
     photo = forms.ImageField()
 
 
-def confirm_emp_update(request, employee_id):
-    emp = get_object_or_404(Employee, pk=employee_id)
-    emp.name = request.POST['name']
-    emp.manager = Employee.objects.get(pk=request.POST['manager'])
+def confirm_emp_update(request, employee_id="new"):
+    if employee_id ==  "new":
+        emp = Employee.objects.create(name=request.POST['name'], manager=Employee.objects.get(pk=request.POST['manager']))
+    else:
+        emp = get_object_or_404(Employee, pk=employee_id)
+        emp.name = request.POST['name']
+        emp.manager = Employee.objects.get(pk=request.POST['manager'])
     newteam = Team.objects.filter(pk=request.POST['team']).first()
-    oldteam = Team.objects.filter(name=request.POST['oldteam']).first()
-    oldteam.employees.remove(employee_id)
-    newteam.employees.add(employee_id)
+    if employee_id != "new":
+        oldteam = Team.objects.filter(name=request.POST['oldteam']).first()
+        oldteam.employees.remove(employee_id)
+    newteam.employees.add(emp.id)
     newteam.save()
     emp.save()
     return HttpResponseRedirect(reverse('makechart:employee-index'))

@@ -125,4 +125,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_ROOT = "C:/Users/Adam/dj-orgchart-builder/makechart/uploads/uploads"
+MEDIA_ROOT = "makechart/uploads/"
+
+MEDIA_URL = "/"

@@ -27,7 +27,7 @@ Employee Index
                 <div><b>Team{% if employee.multipleteams %}s{% endif %}</b>: {{ employee.str_teams }}</div>
             </div>
             <div class="mdl-card__supporting-text">
-                Photo here
+                 <div><b>Manager</b>: {{ employee.manager }}</div>
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <form action="{% url 'makechart:employee-delete' employee.id %}" method="post" style="display: inline;">
@@ -40,8 +40,7 @@ Employee Index
                 </form>
             </div>
           <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">share</i>
+            <div class="emp-icon" style="background-image: url('{{employee.photo.url}}')"></div>
             </button>
           </div>
         </div>
